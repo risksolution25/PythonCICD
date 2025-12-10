@@ -13,7 +13,7 @@ def calculate(a, b, operation):
         elif operation == "multiply":
             return a * b
         elif operation == "divide":
-            return a / b if b != 0 else "Error: divide by zero"
+            return a / b if b != 0 else "Error: division by zero"
         elif operation == 'power':
             return math.pow(a,b)
         return "Invalid operation"
