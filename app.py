@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+import math
 
 app = Flask(__name__)
 
@@ -13,6 +14,8 @@ def calculate(a, b, operation):
             return a * b
         elif operation == "divide":
             return a / b if b != 0 else "Error: divide by zero"
+        elif operation == 'power':
+            return math.pow(a,b)
         return "Invalid operation"
     except Exception as e:
         return f"Error: {e}"

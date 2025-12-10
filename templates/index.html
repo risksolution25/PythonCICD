@@ -65,6 +65,7 @@
                 <option value="subtract" {% if operation=='subtract' %}selected{% endif %}>Subtract</option>
                 <option value="multiply" {% if operation=='multiply' %}selected{% endif %}>Multiply</option>
                 <option value="divide" {% if operation=='divide' %}selected{% endif %}>Divide</option>
+                <option value="power" {% if operation=='power' %}selected{% endif %}>Power of</option>
             </select>
 
             <button type="submit">Calculate</button>
@@ -75,7 +76,7 @@
                 <h2 class="error">{{ result }}</h2>
             {% else %}
                 <h2>Result: {{ a }} 
-                    {% if operation == 'add' %}+{% elif operation == 'subtract' %}-{% elif operation == 'multiply' %}×{% elif operation == 'divide' %}÷{% endif %} 
+                    {% if operation == 'add' %}+{% elif operation == 'subtract' %}-{% elif operation == 'multiply' %}×{% elif operation == 'divide' %}÷{% elif operation == 'power' %}^{% endif %} 
                     {{ b }} = {{ result }}
                 </h2>
             {% endif %}
