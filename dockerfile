@@ -1,5 +1,5 @@
 # Use official Windows Python image
-FROM mcr.microsoft.com/windows/python:3.10-rc
+FROM python:3.10-slim
 
 # Set working directory
 WORKDIR C:/app
