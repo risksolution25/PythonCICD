@@ -1,23 +1,23 @@
-# Use official Windows Python image
+# Use official Windows Python base image
 FROM python:3.10-slim
 
 # Set working directory
-WORKDIR C:/app
+WORKDIR C:\\app
 
-# Copy project files into container
+# Copy files
 COPY . .
 
 # Create virtual environment
-RUN python -m venv venv
+RUN python -m venv C:\app\venv
 
-# Activate venv and upgrade pip
-RUN venv\Scripts\pip.exe install --upgrade pip
+# Upgrade pip in venv
+RUN C:\app\venv\Scripts\pip.exe install --upgrade pip
 
-# Install dependencies inside virtual environment
-RUN venv\Scripts\pip.exe install --no-cache-dir -r requirements.txt
+# Install requirements inside venv
+RUN C:\app\venv\Scripts\pip.exe install -r requirements.txt
 
-# Expose the app port
+# Expose app port
 EXPOSE 4000
 
-# Run the app using venv Python
+# Run app
 CMD ["C:\\app\\venv\\Scripts\\python.exe", "app.py"]
