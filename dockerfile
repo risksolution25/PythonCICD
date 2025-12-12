@@ -1,26 +1,23 @@
-# Use lightweight Python image
-FROM python:3.10-slim
+# Use official Windows Python image
+FROM mcr.microsoft.com/windows/python:3.10-rc
 
 # Set working directory
-WORKDIR /app
+WORKDIR C:/app
 
-# Install venv module (for slim images)
-RUN apt-get update && apt-get install -y python3-venv && rm -rf /var/lib/apt/lists/*
-
-# Create virtual environment inside container
-RUN python3 -m venv /app/venv
-
-# Activate venv and upgrade pip
-RUN /app/venv/bin/pip install --upgrade pip
-
-# Copy project files
+# Copy project files into container
 COPY . .
 
-# Install dependencies INSIDE virtual env
-RUN /app/venv/bin/pip install --no-cache-dir -r requirements.txt
+# Create virtual environment
+RUN python -m venv venv
 
-# Expose app port
+# Activate venv and upgrade pip
+RUN venv\Scripts\pip.exe install --upgrade pip
+
+# Install dependencies inside virtual environment
+RUN venv\Scripts\pip.exe install --no-cache-dir -r requirements.txt
+
+# Expose the app port
 EXPOSE 4000
 
-# Run using venv Python
-CMD ["/app/venv/bin/python", "app.py"]
+# Run the app using venv Python
+CMD ["C:\\app\\venv\\Scripts\\python.exe", "app.py"]
