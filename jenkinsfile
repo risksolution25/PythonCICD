@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    environment {
+        VENV_DIR = 'venv'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/risksolution25/PythonCICD.git'
+            }
+        }
+
+        stage('Setup Python') {
+            steps {
+                bat 'C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m venv venv'
+                bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
+                bat 'venv\\Scripts\\pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'venv\\Scripts\\python.exe -m pytest'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t pythoncicd-app:latest .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                bat '''
+                docker stop pythoncicd || echo "No running container"
+                docker rm pythoncicd || echo "No old container"
+
+                docker run -d -p 4000:4000 --name pythoncicd pythoncicd-app:latest
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✔ Python app tested, Docker built, and container started!"
+        }
+        failure {
+            echo "❌ Pipeline failed!"
+        }
+    }
+}
